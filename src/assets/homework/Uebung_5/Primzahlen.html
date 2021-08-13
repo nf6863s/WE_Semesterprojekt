@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Primzahlen</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        /* Loading bar von den Slides übernommen  Folie 31/32 */
+        div {
+            width: 100%;
+            height: 4em;
+        }
+
+        #container {
+            background-color: lightgrey;
+        }
+
+        #animate {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Primzahlen</h1>
+    <div id="container">
+        <div id="animate"></div>
+    </div>
+    <script>
+        function* generate() {
+            outer:
+            for(let i = 1;; i++) {
+                for (let j = 2; j < i; j++) {
+                    if (i % j == 0) {
+                        continue outer;
+                    }
+                }
+                yield i;
+            }
+        }
+
+        const container = document.getElementById('container');
+        const animate = document.getElementById('animate');
+        let width = 1;
+        const genPrime = generate();
+        let timer = setInterval(() => {
+            width += 1;
+            if (width === 100) width = 1;
+            animate.style.width = width + '%';
+            console.log(genPrime.next().value)
+        }, 16);
+    </script>
+</body>
+</html>

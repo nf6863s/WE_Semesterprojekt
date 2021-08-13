@@ -1,0 +1,99 @@
+body {
+  background-color: #D9DCD6;
+  margin: 0;
+  font-family: 'Bebas Neue', cursive;
+  font-size: 20px;
+  height: 100vh;
+}
+
+/* The navigation menu */
+.navbar {
+  background-color: #67AAE5;
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  height: 100%;
+}
+
+/* Navigation links */
+/*.navbar .nav-btn {
+  float: left;
+  font-size: 16px;
+  text-align: center;
+  padding: 14px 16px;
+  position: relative;
+  color: #fff;
+  text-decoration: none;
+} */
+
+* {
+  box-sizing: border-box;
+}
+
+.nav-container {
+  width: 50%;
+  margin: 0 auto;
+}
+
+@media all and (max-width: 1000px) {
+  .nav-container {
+    width: 75%;
+  }
+}
+
+.navbar ul li {
+  display: inline;
+  text-align: center;
+}
+
+.navbar a {
+  display: inline-block;
+  width: 25%;
+  padding: .75rem 0;
+  margin: 0;
+  text-decoration: none;
+  color: #333;
+}
+
+.one:hover ~ hr {
+  margin-left: 0!important;
+}
+
+.two:hover ~ hr {
+  margin-left: 25%!important;
+}
+
+.three:hover ~ hr {
+  margin-left: 50%!important;
+}
+
+.four:hover ~ hr {
+  margin-left: 75%!important;
+}
+
+hr {
+  height: .25rem;
+  width: 25%;
+  margin: 0;
+  background: #FA8265;
+  border: none;
+  transition: .3s ease-in-out;
+}
+
+ul {
+  margin-top: 0;
+  padding-top: 15px;
+}
+
+.page-body {
+  text-align: center;
+  padding: 50px;
+}
+
+.page-body span {
+  color: #D9DCD6;
+}
+
+.footer {
+  background: #000;
+}

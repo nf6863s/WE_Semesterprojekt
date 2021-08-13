@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Primzahlen</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        /* Loading bar von den Slides übernommen  Folie 31/32 */
+        div {
+            width: 100%;
+            height: 4em;
+        }
+
+        #container {
+            background-color: lightgrey;
+        }
+
+        #animate {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<h1>Primzahlen mit Webworker</h1>
+<div id="container">
+    <div id="animate"></div>
+</div>
+<script>
+    const container = document.getElementById('container');
+    const animate = document.getElementById('animate');
+    let width = 1;
+    const worker = new Worker('../../Script/Uebung_5/PrimeWorker.js');
+    worker.postMessage("test");
+    worker.addEventListener('message', function (e) {
+        console.log(e.data);
+    });
+    let timer = setInterval(() => {
+        width += 1;
+        if (width === 100) width = 1;
+        animate.style.width = width + '%';
+    }, 16);
+</script>
+</body>
+</html>

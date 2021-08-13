@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Einkaufsliste</title>
+    <style>
+        button {
+            margin-left: 5px;
+        }
+
+    </style>
+    <script src="../../Script/Uebung_4/Einkaufsliste.js"></script>
+</head>
+<body>
+    <h1>Einkaufsliste</h1>
+    <div>
+        <label for="input-item">Enter a new item:</label>
+        <input id="input-item" type="text">
+        <button id="add-item" onclick="addItem()">Add item</button>
+    </div>
+    <ul id="item-list">
+        <li id="0">Kaffee<button onclick="removeListItem(0)">Delete</button></li>
+        <li id="1">Äpfel<button onclick="removeListItem(1)">Delete</button></li>
+    </ul>
+</body>
+</html>

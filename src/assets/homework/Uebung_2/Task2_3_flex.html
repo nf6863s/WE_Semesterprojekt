@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>Holy Grail</title>
+    <style>
+
+      body {
+        height: calc(100vh - 16px);
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .header {
+        background-color: #c04f4f;
+        border-top-right-radius: 15px;
+        border-top-left-radius: 15px;
+        text-align: center;
+        padding: 10px;
+        height: 6vh;
+      }
+
+      .header > h2 {
+        margin: 0;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: flex-start;
+      }
+
+      .nav > button {
+        margin: 5px;
+        background-color: #6a709f;
+        border-radius: 15px;
+        padding: 3px 20px;
+        font-weight: 900;
+        font-size: 12px;
+        border-color: #eeecec;
+      }
+
+      .footer {
+        background-color: #000;
+        border-bottom-right-radius: 15px;
+        border-bottom-left-radius: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: baseline;
+      }
+
+      .footer > a {
+        color: inherit;
+        margin: 5px;
+      }
+
+      .body {
+        height: 82vh;
+        width: 100%;
+        overflow: overlay;
+        background-color: #c28281;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: center;
+        font-size: 6vw;
+      }
+
+      .left-menu {
+        width: 20vw;
+      }
+
+      .text-body {
+        background-color: #6a9ebd;
+        width: 60vw;
+        height: fit-content;
+        font-size: 20px;
+      }
+
+      .right {
+        width: 20vw;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h2>Header</h2>
+      <div class="nav">
+        <button type="button" name="button">Home</button>
+        <button type="button" name="button">News</button>
+        <button type="button" name="button">Contact</button>
+        <button type="button" name="button">About</button>
+      </div>
+    </div>
+    <div class="body">
+      <div class="left-menu">
+        <span>left menu with many items</span>
+      </div>
+      <div class="text-body">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus non laoreet tellus. Duis porta gravida tellus, sit amet tincidunt odio vulputate ut. Duis suscipit purus vitae efficitur congue. Aliquam ac felis est. Nam sit amet justo eu velit semper mattis. Etiam in augue mauris. Maecenas tincidunt sem vitae ex lobortis tempus. Aliquam quam libero, dictum at ultrices eu, sagittis gravida sem. Phasellus sollicitudin faucibus tellus nec dignissim. Integer condimentum nisl ut interdum fermentum. Fusce id tellus sollicitudin, auctor quam ut, dictum odio. Sed laoreet massa ac dui egestas, eget volutpat lacus efficitur. Duis volutpat, dui quis iaculis egestas, urna erat fermentum nulla, elementum efficitur ligula nisi nec neque. Etiam pellentesque nibh vel dolor sagittis, id consequat lorem fringilla.
+
+          Suspendisse potenti. Fusce lorem elit, vulputate eu tempor vel, suscipit sit amet purus. Donec maximus nunc elit, ac aliquam felis rhoncus eget. Quisque elementum fringilla imperdiet. Aliquam laoreet nulla eros, quis vehicula turpis ornare nec. Cras congue ex turpis, sed mollis mi porta nec. Nulla facilisi. Praesent at sollicitudin nibh. In eget tortor malesuada, accumsan risus vel, placerat ligula. Morbi id orci leo. Nam pharetra urna ut lectus varius lobortis a id risus.
+
+          Praesent faucibus ipsum id pellentesque consequat. Nunc volutpat sollicitudin consequat. Aliquam aliquet, tellus et venenatis ullamcorper, purus erat consectetur elit, sed dapibus nisl sapien at velit. In at nisl vitae lorem vulputate condimentum ac ut nulla. Fusce imperdiet magna in leo sodales luctus. Quisque pellentesque nunc nisl, quis facilisis felis lobortis ut. Suspendisse vitae diam dui. Suspendisse potenti. Duis posuere arcu mauris, nec pharetra ante semper sit amet. Ut ullamcorper pulvinar est at ultrices. Suspendisse purus tellus, tempor sit amet ornare a, congue in nisl. Donec eu lorem in dolor suscipit porttitor nec ut leo.
+
+          Nunc eget massa augue. Mauris placerat massa diam, in porttitor eros vehicula facilisis. Maecenas aliquet arcu nisl, eget placerat dolor pulvinar tempus. Aenean porta, massa in pharetra interdum, nulla ligula lacinia mauris, a pulvinar urna ipsum eu tortor. Praesent ac velit a ligula ullamcorper suscipit. Phasellus vitae leo tincidunt, placerat ante vitae, blandit tortor. Duis ipsum augue, aliquam ut tincidunt hendrerit, placerat eu metus. Etiam efficitur odio at diam mattis laoreet. Fusce venenatis nisl sit amet vestibulum bibendum. Sed vestibulum facilisis tellus, sit amet congue libero semper aliquam.
+
+          Praesent eget laoreet diam, nec ornare nunc. Praesent non tincidunt dolor, eget volutpat nunc. In quis pharetra justo, ut molestie quam. Mauris quis orci eleifend, cursus purus eget, varius arcu. Phasellus sem sapien, tincidunt in consectetur sit amet, interdum vitae felis. Aliquam tristique sapien lorem. Vestibulum vehicula, urna ut rutrum elementum, justo felis faucibus eros, sit amet sagittis ex arcu ut quam. Praesent ut efficitur nisl, dictum ultrices mi. Praesent a gravida leo, sed dictum libero. Nulla rhoncus nisl et lectus congue tincidunt. Maecenas id massa in eros condimentum pulvinar nec ut nisl.
+        </p>
+      </div>
+      <div class="right">
+        <span>right</span>
+      </div>
+    </div>
+
+    <div class="footer">
+      <h2>Footer:</h2>
+      <a href="#">Sitemap</a>
+      <a href="#">Home</a>
+      <a href="#">News</a>
+      <a href="#">Contact</a>
+      <a href="#">About</a>
+    </div>
+  </body>
+</html>

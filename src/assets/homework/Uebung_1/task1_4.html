@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<style>
+    body {
+        font-family: sans-serif;
+        background: #b2d6d1;
+        text-align: center;
+    }
+
+    .survey-body {
+        background: #fff;
+        padding: 20px;
+    }
+
+    table {
+        margin: auto;
+    }
+
+    tr {
+        vertical-align: baseline;
+    }
+
+    td {
+        text-align: right;
+        padding: 10px
+    }
+
+    input[type=text], input[type=number], select {
+        width: 100%;
+        padding: 5px 5px;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        box-sizing: border-box;
+    }
+
+    ::placeholder {
+        color: rgba(204, 204, 204, 0.95);
+    }
+
+    .input-row {
+        text-align: left;
+    }
+
+    .input {
+        width: 100%;
+    }
+
+    .radio-group {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .dropdown {
+        width: 150px;
+    }
+
+    .required::before {
+        content: "*";
+        font-size: 10px;
+        margin-right: 3px;
+        vertical-align: text-top;
+    }
+
+</style>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Survey Form</h1>
+    <form class="survey-body">
+        <span>Let us know how we can improve freeCodeCamp</span>
+        <table>
+            <tr>
+                <td><label class="required">Name:</label></td>
+                <td class="input-row"><input class="input" type="text" placeholder="Enter your name"></td>
+            </tr>
+            <tr>
+                <td><label class="required">Email:</label></td>
+                <td class="input-row"><input class="input" type="text" placeholder="Enter your Email"></td>
+            </tr>
+            <tr>
+                <td><label class="required">Age:</label></td>
+                <td class="input-row"><input class="input" type="number" placeholder="Age" min="0"></td>
+            </tr>
+            <tr>
+                <td><label>Which option best describes your current role?</label></td>
+                <td class="input-row">
+                    <select class="dropdown">
+                        <option value="Student">Student</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Alcoholic">Alcoholic</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label class="required">How likely is that you would recommend freeCodeCamp to a friend?</label></td>
+                <td class="input-row">
+                    <label class="radio-group" for="def"><input type="radio" id="def">Definitely</label>
+                    <label class="radio-group" for="may"><input type="radio" id="may">Maybe</label>
+                    <label class="radio-group" for="not"><input type="radio" id="not">Not sure</label>
+                </td>
+            </tr>
+            <tr>
+                <td><label>What do you like most in FCC</label></td>
+                <td class="input-row">
+                    <select class="dropdown">
+                        <option value="" disabled selected>Select an option</option>
+                        <option value="Everything">Everything</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Things that should be improved in the future <br/>(Check all that apply):</label></td>
+                <td class="input-row">
+                    <label class="radio-group" for="fe"><input type="checkbox" id="fe">Front-end Projects</label>
+                    <label class="radio-group" for="be"><input type="checkbox" id="be">Back-end Projects</label>
+                    <label class="radio-group" for="dv"><input type="checkbox" id="dv">Data Visualization</label>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

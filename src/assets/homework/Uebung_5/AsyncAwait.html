@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Async/Await</title>
+    <style>
+        #spanB {
+            color: red;
+        }
+    </style>
+    <script>
+        (async _=>{
+            try {
+                await Promise.all([
+                    fetch('http://www2.inf.h-brs.de/~nfrit12s/TextA.txt', {
+                        method: 'GET',
+                        mode: 'cors'
+                    }).then(function(response) {
+                        return response.text();
+                    }).then(data => document.getElementById('spanA').innerText = data),
+                    fetch('http://www2.inf.h-brs.de/~nfrit12s/TextB.txt', {
+                        method: 'GET',
+                        mode: 'cors'
+                    }).then(function(response) {
+                        return response.text();
+                    }).then(data => document.getElementById('spanB').innerText = data)
+                    ])
+
+            } catch (error) {
+                console.log(error)
+
+                throw (error)
+            }
+        })();
+    </script>
+</head>
+<body>
+<h1>Async/Await</h1>
+<div>
+    <span id="spanA"></span>
+    <span id="spanB"></span>
+</div>
+</body>
+</html>

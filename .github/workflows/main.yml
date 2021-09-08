@@ -13,7 +13,8 @@ jobs:
     - name: FTP-Deploy-Action
       uses: SamKirkland/FTP-Deploy-Action@3.1.1
       with:
-        ftp-server: sftp://www2.inf.h-brs.de:22/home/nfrit12s/
+        ftp-server: sftp://www2.inf.h-brs.de:22/home/nfrit12s/public_html/Components
         ftp-username: ${{ secrets.FTP_USERNAME }}
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         git-ftp-args: --insecure
+        local-dir: ./src/assets/homework/

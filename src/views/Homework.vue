@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import Homework from '../../homework/hw.json';
 export default {
   name: "Homework",
   data() {
@@ -16,6 +17,7 @@ export default {
     };
   },
   mounted() {
+    console.log(Homework.msg);
   },
   methods: {
   }

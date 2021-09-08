@@ -19,4 +19,4 @@ jobs:
         git-ftp-args: --insecure
         local-dir: ./homework/
     - name: Create Homework-File JSON
-      run: createHomeworkFileJSON.sh
+      run: sh createHomeworkFileJSON.sh

@@ -18,3 +18,5 @@ jobs:
         ftp-password: ${{ secrets.FTP_PASSWORD }}
         git-ftp-args: --insecure
         local-dir: ./homework/
+    - name: Create Homework-File JSON
+      run: createHomeworkFileJSON.sh

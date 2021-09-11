@@ -24,7 +24,7 @@ jobs:
       run: |
         git config --local user.email "n.fritzsche-2006@web.de"
         git config --local user.name "nf6863s"
-        git add ./Homework
+        git add ./homework
         git commit -m "Automated homework-list"
     - name: Push changes # push the output folder to your repo
       uses: ad-m/github-push-action@master

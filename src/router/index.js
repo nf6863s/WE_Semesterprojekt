@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Homework from "@/views/Homework";
-import HomeworkReview from "@/views/HomeworkReview";
+import HomeworkDetailView from "@/views/HomeworkDetailView";
 
 const routes = [
   {
@@ -16,8 +16,8 @@ const routes = [
   },
   {
     path: '/homework/:folder/:task',
-    name: 'Review',
-    component: HomeworkReview,
+    name: 'Detail',
+    component: HomeworkDetailView,
     props: true
   },
   {

@@ -42,10 +42,10 @@
     const animate = document.getElementById('animate');
     let width = 1;
     const worker = new Worker('../../Script/Uebung_5/PrimeWorker.js');
-    worker.postMessage("test");
+    /*worker.postMessage("test");
     worker.addEventListener('message', function (e) {
         console.log(e.data);
-    });
+    });*/
     let timer = setInterval(() => {
         width += 1;
         if (width === 100) width = 1;

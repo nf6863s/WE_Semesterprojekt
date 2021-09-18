@@ -74,9 +74,10 @@ export default {
   mounted() {
     // Inject Google Code Prettifier as external Script as described here: https://vue-view.com/how-to-load-an-external-script-in-vue-component/
     let externalScript = document.createElement('script');
-    externalScript.setAttribute('src',
-        'https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=html&lang=css&lang=js&skin=sunburst');
-    document.head.appendChild(externalScript);
+    setTimeout(() => {
+      externalScript.setAttribute('src','https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?lang=html&lang=css&lang=js&skin=sunburst');
+      document.head.appendChild(externalScript);
+    }, 0);
   }
 }
 </script>

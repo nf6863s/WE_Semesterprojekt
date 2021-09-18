@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Homework from "@/views/Homework";
 import HomeworkDetailView from "@/views/HomeworkDetailView";
+import Hexapawn from '@/views/Hexapawn';
 
 const routes = [
   {
@@ -19,6 +20,11 @@ const routes = [
     name: 'Detail',
     component: HomeworkDetailView,
     props: true
+  },
+  {
+    path: '/hexapawn',
+    name: 'Hexapawn',
+    component: Hexapawn
   },
   {
     path: '/about',

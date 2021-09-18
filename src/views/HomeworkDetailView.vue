@@ -54,12 +54,20 @@ export default {
         .then( t => {
           this.content = t;
           let check_for_external_script = this.content.matchAll(/<script src=(.*?)<\/script>/gi);
+          let check_for_external_WebWorker = this.content.matchAll(/new Worker\((.*?)\);/gi);
           for (let el of check_for_external_script) {
             let js_source = el[1]
                 .replaceAll('../', '')
                 .replaceAll('"', '')
                 .replaceAll('>', '');
             this.fetchJs(js_source);
+          }
+          for (let el of check_for_external_WebWorker) {
+            let ww_source = el[1]
+                .replaceAll('"', '')
+                .replaceAll("'", "");
+            console.log(ww_source);
+            this.fetchJs(ww_source);
           }
         });
   },

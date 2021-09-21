@@ -1,32 +1,35 @@
 <template>
   <h1>Hexapawn</h1>
   <h3>How to build a game-learning machine and then teach it to play and to win</h3>
-  <table class="chessboard">
-    <tr>
-      <td>3</td>
-      <td class="field black" id="20"><font-awesome-icon class="pawn pawn-black" id="4"  icon="chess-pawn"/></td>
-      <td class="field white" id="21"><font-awesome-icon class="pawn pawn-black" id="5"  icon="chess-pawn"/></td>
-      <td class="field black" id="22"><font-awesome-icon class="pawn pawn-black" id="6"  icon="chess-pawn"/></td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td class="field white" id="10"></td>
-      <td class="field black" id="11"></td>
-      <td class="field white" id="12"></td>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td class="field black" id="00"><font-awesome-icon class="pawn pawn-white" id="1" icon="chess-pawn" v-on:click="click_pawn(1)"/></td>
-      <td class="field white" id="01"><font-awesome-icon class="pawn pawn-white" id="2" icon="chess-pawn" v-on:click="click_pawn(2)"/></td>
-      <td class="field black" id="02"><font-awesome-icon class="pawn pawn-white" id="3" icon="chess-pawn" v-on:click="click_pawn(3)"/></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td>A</td>
-      <td>B</td>
-      <td>C</td>
-    </tr>
-  </table>
+  <div>
+    <table class="chessboard">
+      <tr>
+        <td>3</td>
+        <td class="field black" id="20"><font-awesome-icon class="pawn pawn-black" id="4"  icon="chess-pawn"/></td>
+        <td class="field white" id="21"><font-awesome-icon class="pawn pawn-black" id="5"  icon="chess-pawn"/></td>
+        <td class="field black" id="22"><font-awesome-icon class="pawn pawn-black" id="6"  icon="chess-pawn"/></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td class="field white" id="10"></td>
+        <td class="field black" id="11"></td>
+        <td class="field white" id="12"></td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td class="field black" id="00"><font-awesome-icon class="pawn pawn-white" id="1" icon="chess-pawn" v-on:click="click_pawn(1)"/></td>
+        <td class="field white" id="01"><font-awesome-icon class="pawn pawn-white" id="2" icon="chess-pawn" v-on:click="click_pawn(2)"/></td>
+        <td class="field black" id="02"><font-awesome-icon class="pawn pawn-white" id="3" icon="chess-pawn" v-on:click="click_pawn(3)"/></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+      </tr>
+    </table>
+    <span>Winrate for Black in the last 10 Games: {{get_wr_for_last_ten_games()}}</span>
+  </div>
 </template>
 
 <script>
@@ -36,10 +39,14 @@ export default {
     return {
       board: [],
       pawns: [],
+      pawn_icons: [],
       selected_pawn: 0,
       highlighted_fields: [],
-      move_pawn_function: () => {},
+      move_pawn_function: new Map(),
       move_number: 0,
+      last_move_black: [],
+      winner: '',
+      game_history: [],
 
       move_response_list: {}
     }
@@ -67,11 +74,6 @@ export default {
       // Get all possible moves for selected pawn
       let legal_moves = this.get_legal_moves(this.board, this.pawns.get(this.selected_pawn).pos, true);
 
-      if (legal_moves.length === 0) {
-        alert("game over - no moves");
-        return;
-      }
-
       // Add CSS Highlighting to fields that can be moved to and add click-event to move the pawn
       for (let move of legal_moves) {
         let id = move[0] + '' + move[1];
@@ -83,9 +85,9 @@ export default {
 
         // Providing closure for internal function to allow click-event to handle function call
         //const move_function = this.test;
-        field.addEventListener('click', move_function);
+        field.addEventListener('click', move_function, { once: true});
 
-        this.move_pawn_function = move_function;
+        this.move_pawn_function.set(id, move_function);
       }
     },
 
@@ -98,6 +100,14 @@ export default {
       this.pawns.set(4, this.pawn_object_factory(4, [2, 0], false));
       this.pawns.set(5, this.pawn_object_factory(5, [2, 1], false));
       this.pawns.set(6, this.pawn_object_factory(6, [2, 2], false));
+
+      this.pawn_icons = new Map();
+      this.pawn_icons.set(1, document.getElementById('1').cloneNode(true));
+      this.pawn_icons.set(2, document.getElementById('2').cloneNode(true));
+      this.pawn_icons.set(3, document.getElementById('3').cloneNode(true));
+      this.pawn_icons.set(4, document.getElementById('4').cloneNode(true));
+      this.pawn_icons.set(5, document.getElementById('5').cloneNode(true));
+      this.pawn_icons.set(6, document.getElementById('6').cloneNode(true));
     },
 
     pawn_object_factory(id, pos, white) {
@@ -181,8 +191,9 @@ export default {
         let field = document.getElementById(id);
         field.classList.remove('highlight');
 
-        const move_function = this.move_pawn_function;
-        field.removeEventListener('click', move_function);
+        const move_function = this.move_pawn_function.get(id);
+        field.removeEventListener('click', move_function, { once: true});
+        this.move_pawn_function.delete(id);
       }
 
       this.highlighted_fields = [];
@@ -221,23 +232,28 @@ export default {
 
       pawn.setPos(newPos);
 
-      this.remove_highlighting();
-      this.selected_pawn = 0;
+      if (white) {
+        this.remove_highlighting();
+        this.selected_pawn = 0;
+      }
 
       this.move_number++;
 
       // Check if player has won
-      let game_over = this.check_win_conditions();
+      let game_over = this.check_win_conditions(white);
 
-      if (game_over) {
-        alert("game over - You Win");
-      }
-      if (white) {
-        this.make_opponent_move();
-      }
+      setTimeout(()=> {
+        if (game_over) {
+          this.winner = white ? 'white': 'black';
+          this.game_over();
+        } else if (white) {
+          this.make_opponent_move();
+        }
+      }, 250);
+
     },
 
-    check_win_conditions() {
+    check_win_conditions(white) {
 
       // 1. Win Condition: Pawn at opponents end of the board
       for (let i = 0; i < 3; i++) {
@@ -256,35 +272,40 @@ export default {
         }
       }
 
-      // 2. Win Condition: Opponent has no more legal moves
-      // implementing in click_pawn-method
-
-      // 3. Win Condition: Opponent has no more Pawns left
+      // 2. Win Condition: Opponent has no more Pawns left
+      // 3. Win Condition: Opponent has no more legal moves
 
       let prev_pawn_color = null;
+      let no_pawns_left = true;
+      let no_legal_moves_left = true;
+
       for (let pawn of this.pawns.values()) {
 
         // Check if all Pawns have the same color
         if (prev_pawn_color === null) {
           prev_pawn_color = pawn.isWhite();
         } else if (prev_pawn_color ^ pawn.isWhite()) {
-          return false;
+          no_pawns_left = false;
+        }
+
+        // if there is at least one pawn with a legal move, 3. win condition is not met
+        if (no_legal_moves_left && pawn.isWhite() !== white && this.get_legal_moves(this.board, pawn.getPos(), pawn.isWhite()).length > 0) {
+          no_legal_moves_left = false;
         }
       }
 
-      return true;
+      return no_pawns_left || no_legal_moves_left;
     },
 
     make_opponent_move() {
       for (let i = 0; i < this.move_response_list.moves.length; i++) {
         let move = this.move_response_list.moves[i];
-        //console.log(this.compareToCurrentBoard(move.board)? 'board found': '');
         if (move.move === this.move_number + 1 && this.compareToCurrentBoard(move.board) && move.possible_moves.length > 0) {
           let random_selection = parseInt(Math.random() * move.possible_moves.length);
           let random_selected_move = move.possible_moves[random_selection];
-          console.log(move, random_selected_move);
+          this.last_move_black = [i, random_selection];
           this.move_pawn(random_selected_move.id, random_selected_move.move_to[0] + '' + random_selected_move.move_to[1], false);
-        } else if (move.possible_moves.length === 0){
+        } else if (move.move === this.move_number + 1 && this.compareToCurrentBoard(move.board) && move.possible_moves.length === 0){
           // probably need to play a random legal move anyways to continue interaction with player
           //console.log('no more moves - black looses');
         }
@@ -306,7 +327,6 @@ export default {
       this.recursively_init_move_response_list(test_board, this.move_response_list, 2);
 
       console.log(this.move_response_list.moves.sort((moveA, moveB) => {return Math.sign(moveA.move - moveB.move)}));
-      //console.log(this.get_legal_moves([[1,0,0],[0,3,0],[4,5,0]], [2, 0], false))
     },
 
     recursively_init_move_response_list(curr_board, move_response_list, move_depth) {
@@ -418,6 +438,7 @@ export default {
 
       return false;
     },
+
     compareToCurrentBoard(board) {
       for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
@@ -427,6 +448,73 @@ export default {
         }
       }
       return true;
+    },
+
+    game_over() {
+      alert(this.winner + ' has won');
+
+      // remove last used move of black (learn from mistake)
+      if (this.winner === 'white') {
+        let i = this.last_move_black[0];
+        let moveIndex = this.last_move_black[1];
+
+        if (moveIndex > -1) {
+          this.move_response_list.moves[i].possible_moves.splice(moveIndex, 1);
+        }
+
+        this.last_move_black = [];
+        this.winner = '';
+        this.game_history.push(0);
+      } else {
+        this.game_history.push(1);
+      }
+
+      //this.get_wr_for_last_ten_games();
+
+      // reset board-state
+      for (let i = 0; i < 6; i++) {
+        let old_pawn_icon = document.getElementById((i + 1) + '');
+        let new_pawn_icon = this.pawn_icons.get(i + 1);
+
+        if (old_pawn_icon !== null) {
+          old_pawn_icon.remove();
+        }
+
+        if (i < 3) {
+          const click_pawn = () => this.click_pawn(i + 1);
+          new_pawn_icon.addEventListener('click', click_pawn);
+        }
+
+        let field = document.getElementById((i < 3) ? ('0' + i): ('2' + i - 3));
+
+        field.appendChild(new_pawn_icon);
+      }
+
+      this.move_number = 0;
+      this.init_pawns();
+      this.init_board();
+    },
+
+    get_wr_for_last_ten_games() {
+      let last_ten = [];
+      if (this.game_history.length === 0) {
+        return '0%';
+      }
+
+      if (this.game_history.length > 10) {
+        last_ten = this.game_history.slice(this.game_history.length - 10);
+      } else {
+        last_ten = this.game_history;
+      }
+
+      let black_wins = 0;
+
+      last_ten.forEach(el => black_wins += el);
+
+      console.log(black_wins, black_wins/last_ten.length);
+
+      return parseFloat(black_wins/last_ten.length * 100).toFixed(0)+"%";
+
     }
   },
   mounted() {

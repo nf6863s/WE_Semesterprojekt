@@ -16,7 +16,7 @@
       </div>
       <div class="iframe-div">
         <h3>Preview</h3>
-        <iframe :src="'http://www2.inf.h-brs.de/~nfrit12s/homework/' + folder + '/' + task"></iframe>
+        <iframe :src="'https://www2.inf.h-brs.de/~nfrit12s/homework/' + folder + '/' + task"></iframe>
       </div>
     </div>
   </div>
@@ -31,6 +31,15 @@ export default {
       js_files: new Map()
     };
   },
+  metaInfo() {
+    return {
+      title: 'WE-Semesterprojekt',
+      meta: [{
+        'http-equiv': 'Content-Security-Policy',
+        'content':'upgrade-insecure-requests'
+      }]
+    }
+  },
   props: [
       'folder',
       'task'
@@ -38,7 +47,7 @@ export default {
   methods: {
     async fetchJs(path) {
       console.log(path);
-      const response = await fetch('http://www2.inf.h-brs.de/~nfrit12s/' + path);
+      const response = await fetch('https://www2.inf.h-brs.de/~nfrit12s/' + path);
 
       if (response.ok) {
         let text = await response.text();

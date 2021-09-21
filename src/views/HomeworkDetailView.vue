@@ -31,7 +31,7 @@ export default {
       js_files: new Map()
     };
   },
-  metaInfo() {
+  /*metaInfo() {
     return {
       title: 'WE-Semesterprojekt',
       meta: [{
@@ -39,7 +39,7 @@ export default {
         'content':'upgrade-insecure-requests'
       }]
     }
-  },
+  },*/
   props: [
       'folder',
       'task'

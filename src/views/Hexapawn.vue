@@ -1,7 +1,90 @@
 <template>
   <h1>Hexapawn</h1>
   <h3>How to build a game-learning machine and then teach it to play and to win</h3>
-  <div>
+  <h3 class="tutorial-expand" v-on:click="toggle_tutorial()">For a tutorial click here <font-awesome-icon :class="{hidden: show_tutorial}" icon="chevron-down"/><font-awesome-icon :class="{hidden: !show_tutorial}" icon="chevron-up"/></h3>
+  <div class="how-to-play" v-bind:class="{hidden: !show_tutorial}">
+    <h3>How to Play</h3>
+    <div>
+      Hexapawn is basically Chess, but smaller (and maybe even better). <br>It is played on a 3x3 Board with 3 Pawns each.
+      <br>
+      The Pawns can move just like a normal Pawn could in Chess.
+      <br>
+      So one field ahead if it is empty or one field diagonally forward, if there is an opponents Pawn to attack.
+      <div>
+        <table class="chessboard">
+          <tr>
+            <td class="tutorial-field black highlight"><font-awesome-icon class="pawn pawn-black" icon="chess-pawn"/></td>
+            <td class="tutorial-field white highlight"></td>
+          </tr>
+          <tr>
+            <td class="tutorial-field white"></td>
+            <td class="tutorial-field black"><font-awesome-icon class="pawn pawn-white" icon="chess-pawn"/></td>
+          </tr>
+        </table>
+      </div>
+      <br>
+      White (You) will always have the first move.
+      <br>
+      <br>
+      There are three possible ways to win the Game:
+      <ol class="tutorial-list">
+        <li>
+          <span>Get your Pawn to the other Side of the field</span>
+          <div>
+            <table class="chessboard">
+              <tr>
+                <td class="tutorial-field black"><font-awesome-icon class="pawn pawn-black" icon="chess-pawn"/></td>
+                <td class="tutorial-field white selected"><font-awesome-icon class="pawn pawn-white" icon="chess-pawn"/></td>
+              </tr>
+              <tr>
+                <td class="tutorial-field white"></td>
+                <td class="tutorial-field black"></td>
+              </tr>
+            </table>
+          </div>
+        </li>
+        <li>
+          <span>Leave the Opponent with no legal moves on his next turn</span>
+          <div>
+            <table class="chessboard">
+              <tr>
+                <td class="tutorial-field black"><font-awesome-icon class="pawn pawn-black" icon="chess-pawn"/></td>
+                <td class="tutorial-field white"></td>
+              </tr>
+              <tr>
+                <td class="tutorial-field white"><font-awesome-icon class="pawn pawn-white" icon="chess-pawn"/></td>
+                <td class="tutorial-field black"></td>
+              </tr>
+            </table>
+          </div>
+        </li>
+        <li>
+          <span>Take all of the Opponents Pawns</span>
+          <div>
+            <table class="chessboard">
+              <tr>
+                <td class="tutorial-field black"></td>
+                <td class="tutorial-field white"></td>
+              </tr>
+              <tr>
+                <td class="tutorial-field white"><font-awesome-icon class="pawn pawn-white" icon="chess-pawn"/></td>
+                <td class="tutorial-field black"><font-awesome-icon class="pawn pawn-white" icon="chess-pawn"/></td>
+              </tr>
+            </table>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <h3>How the Opponent learns</h3>
+    <div>
+      The Game Hexapawn was invented by American Mathematician Martin Gardner,<br>
+      who was the Author for the Column "Mathematical Games" in the Journal "Scientific American" <br>
+
+    </div>
+    <h3 class="tutorial-expand" v-on:click="toggle_tutorial()">Hide Tutorial <font-awesome-icon icon="chevron-up"/></h3>
+
+  </div>
+  <div class="container">
     <table class="chessboard">
       <tr>
         <td>3</td>
@@ -28,13 +111,15 @@
         <td>C</td>
       </tr>
     </table>
-    <span>Winrate for Black in the last 10 Games: {{get_wr_for_last_ten_games()}}</span>
+    <scoreboard ref="scoreboard" class="scoreboard"></scoreboard>
   </div>
 </template>
 
 <script>
+import Scoreboard from "@/components/Scoreboard";
 export default {
   name: "Hexapawn",
+  components: {Scoreboard},
   data() {
     return {
       board: [],
@@ -46,7 +131,8 @@ export default {
       move_number: 0,
       last_move_black: [],
       winner: '',
-      game_history: [],
+
+      show_tutorial: false,
 
       move_response_list: {}
     }
@@ -464,9 +550,9 @@ export default {
 
         this.last_move_black = [];
         this.winner = '';
-        this.game_history.push(0);
+        this.$refs.scoreboard.updateScore(0);
       } else {
-        this.game_history.push(1);
+        this.$refs.scoreboard.updateScore(1);
       }
 
       //this.get_wr_for_last_ten_games();
@@ -495,26 +581,8 @@ export default {
       this.init_board();
     },
 
-    get_wr_for_last_ten_games() {
-      let last_ten = [];
-      if (this.game_history.length === 0) {
-        return '0%';
-      }
-
-      if (this.game_history.length > 10) {
-        last_ten = this.game_history.slice(this.game_history.length - 10);
-      } else {
-        last_ten = this.game_history;
-      }
-
-      let black_wins = 0;
-
-      last_ten.forEach(el => black_wins += el);
-
-      console.log(black_wins, black_wins/last_ten.length);
-
-      return parseFloat(black_wins/last_ten.length * 100).toFixed(0)+"%";
-
+    toggle_tutorial() {
+      this.show_tutorial = !this.show_tutorial;
     }
   },
   mounted() {
@@ -526,14 +594,39 @@ export default {
 </script>
 
 <style scoped>
+  .how-to-play {
+    width: 70vw;
+    margin: auto auto 100px;
+  }
+
   .chessboard {
-    margin: auto;
+    margin: 10px auto auto;
     border-style: inset;
+    text-align: center;
   }
 
   .field {
     width: 100px;
     height: 100px;
+  }
+
+  .tutorial-field {
+    width: 50px;
+    height: 50px;
+  }
+
+  .tutorial-list {
+    width: fit-content;
+    margin: 10px auto auto;
+    text-align: left;
+  }
+
+  .tutorial-list > li {
+    margin-bottom: 30px;
+  }
+
+  .tutorial-list > li > div {
+    margin-right: 40px;
   }
 
   .selected {
@@ -565,4 +658,20 @@ export default {
     color: bisque;
   }
 
+  .scoreboard {
+    margin: 50px auto auto;
+  }
+
+  .container {
+    padding-bottom: 50px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .tutorial-expand {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 </style>

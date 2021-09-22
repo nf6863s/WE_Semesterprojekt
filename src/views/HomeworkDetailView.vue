@@ -56,7 +56,7 @@ export default {
     }
   },
   created() {
-    let html_string = 'http://www2.inf.h-brs.de/~nfrit12s/homework/' + this.folder + '/' + this.task;
+    let html_string = 'https://www2.inf.h-brs.de/~nfrit12s/homework/' + this.folder + '/' + this.task;
 
     fetch(html_string)
         .then( r => r.text())

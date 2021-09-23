@@ -79,7 +79,14 @@
     <div>
       The Game Hexapawn was invented by American Mathematician Martin Gardner,<br>
       who was the Author for the Column "Mathematical Games" in the Journal "Scientific American" <br>
-
+      The Article that first mentioned Hexapawn was titled<br> "How to build a game-learning machine and then teach it to play and win",<br>
+      which was about a reinforcement-learning machine called "MENACE" that was build out of 300 Matchboxes and was able to play Noughts and Crosses (Tic-Tac-Toe)<br>
+      You can find the Article from Martin Gardner <a href="http://cs.williams.edu/~freund/cs136-073/GardnerHexapawn.pdf" target="_blank">here</a> and another Article about "MENACE" <a href="https://medium.com/@ODSC/how-300-matchboxes-learned-to-play-tic-tac-toe-using-menace-35e0e4c29fc" target="_blank">here</a>.<br><br>
+      This implementation mirrors that of the original approach with matchboxes, where for every possible board-state, a matchbox with colored marbles each corresponding to a legal move were created.<br>
+      The "AI" would then pick the matchbox for the current board-state and pick one marble at random to decide which move to use.<br>
+      If the move lead to a loss for the "AI", the marble that corresponded to the loosing move was removed and the game was restarted, resulting in a continuous learning Algorithm.<br><br>
+      To try out this method, feel free to try and beat the computer in the Game below. The Score is automatically tallied and the Win-Rate for the Computer is shown for the last 10 Matches. <br>
+      If you refresh the Browser, all learning progress is reset.
     </div>
     <h3 class="tutorial-expand" v-on:click="toggle_tutorial()">Hide Tutorial <font-awesome-icon icon="chevron-up"/></h3>
 
